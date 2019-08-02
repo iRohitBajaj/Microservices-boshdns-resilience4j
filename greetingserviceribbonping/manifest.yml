@@ -1,0 +1,7 @@
+applications:
+- name: greetingserviceribbonping
+  memory: 1G
+  instances: 3
+  path: ../greetingserviceribbonping/target/greetingserviceribbonping-0.0.1-SNAPSHOT.jar
+  services:
+    - eureka

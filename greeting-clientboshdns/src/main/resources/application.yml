@@ -1,0 +1,12 @@
+#ribbon:
+#  eureka:
+#    enabled: false
+#  eager-load:
+#    enabled: true
+#    clients: greetingserviceboshdns
+#greetingserviceboshdns:
+#  ribbon:
+#    listOfServers: greetingserviceboshdns.apps.internal
+#    ServerListRefreshInterval: 15000
+
+

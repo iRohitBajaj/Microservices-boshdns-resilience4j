@@ -1,0 +1,6 @@
+applications:
+- name: greetingclientboshdns
+  memory: 1G
+  instances: 3
+  path: ../greeting-clientboshdns/target/greetingclientboshdns-0.0.1-SNAPSHOT.jar
+  domain: apps.internal

@@ -1,0 +1,22 @@
+logging.level.com.zaxxer: DEBUG
+
+spring:
+  cloud:
+    services:
+      registrationMethod: direct
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:https://eurekaservertuned.cfapps.io/eureka}
+    initialInstanceInfoReplicationIntervalSeconds: 10
+    instanceInfoReplicationIntervalSeconds: 10
+    registryFetchIntervalSeconds: 10
+  instance:
+    preferIpAddress: true
+    lease-renewal-interval-in-seconds: 10
+
+ribbon:
+  ServerListRefreshInterval: 1000
+  eureka:
+    enabled: true

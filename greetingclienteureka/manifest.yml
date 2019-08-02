@@ -1,0 +1,7 @@
+applications:
+- name: greetingclienteureka
+  memory: 1G
+  instances: 3
+  path: ../greetingclienteureka/target/greetingclienteureka-0.0.1-SNAPSHOT.jar
+  services:
+    - eureka

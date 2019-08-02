@@ -1,0 +1,12 @@
+eureka:
+  instance:
+    nonSecurePort: 8080
+
+logging.level:
+  org.springframework.cloud.netflix.ribbon: DEBUG
+  com.netflix.loadbalancer: DEBUG
+
+spring:
+  cloud:
+    services:
+      registrationMethod: direct

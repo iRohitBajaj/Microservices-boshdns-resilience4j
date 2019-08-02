@@ -1,0 +1,10 @@
+server:
+  port: 9097
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+  instance:
+    preferIpAddress: true
+
+logging.level.com.zaxxer: DEBUG

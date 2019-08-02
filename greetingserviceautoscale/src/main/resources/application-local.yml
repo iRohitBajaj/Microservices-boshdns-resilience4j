@@ -1,0 +1,53 @@
+server:
+  port: 9096
+
+management.metrics.tags.application: ${spring.application.name}
+management.metrics.distribution.percentiles-histogram.http.server.requests: true
+management.metrics.distribution.percentiles-histogram.resilience4j.circuitbreaker.calls: true
+management.endpoints.web.exposure.include: '*'
+management.endpoint.health.show-details: always
+
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      registerHealthIndicator: true
+      ringBufferSizeInClosedState: 6
+      ringBufferSizeInHalfOpenState: 3
+      automaticTransitionFromOpenToHalfOpenEnabled: true
+      waitDurationInOpenState: 2s
+      failureRateThreshold: 20
+  instances:
+    getWeather:
+      baseConfig: default
+      eventConsumerBufferSize: 10
+resilience4j.retry:
+  instances:
+    getWeather:
+      maxRetryAttempts: 5
+      enableExponentialBackoff: true
+      exponentialBackoffMultiplier: 3
+      waitDuration: 100
+      retryExceptions:
+        - java.net.SocketTimeoutException
+        - org.springframework.web.client.ResourceAccessException
+
+resilience4j.bulkhead:
+  configs:
+    default:
+      maxConcurrentCalls: 50
+      maxWaitDuration: 10ms
+
+com:
+  intuit:
+    external:
+      weather:
+        host: api.openweathermap.org
+        port: 80
+        
+
+persondetailsservice:
+  url: http://localhost:9097/person/
+
+restclient:
+  timeout: 3000
+#  timeout: 1

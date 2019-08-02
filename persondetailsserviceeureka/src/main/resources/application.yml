@@ -1,0 +1,6 @@
+logging.level.com.zaxxer: DEBUG
+
+spring:
+  cloud:
+    services:
+      registrationMethod: direct

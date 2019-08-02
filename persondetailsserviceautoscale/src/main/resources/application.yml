@@ -1,0 +1,62 @@
+logging.level.com.zaxxer: DEBUG
+
+management.metrics.tags.application: ${spring.application.name}
+management.metrics.distribution.percentiles-histogram.http.server.requests: true
+management.metrics.distribution.percentiles-histogram.resilience4j.circuitbreaker.calls: true
+management.endpoints.web.exposure.include: '*'
+management.endpoint.health.show-details: always
+
+spring:
+  datasource:
+    hikari:
+      connectionTimeout: 250
+    url: jdbc:mysql://localhost:3306/testdb?useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: rohit
+    password: bajaj
+    initialization-mode: always
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+        ddl-auto: none
+        id:
+          new_generator_mappings: false
+
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      registerHealthIndicator: true
+      ringBufferSizeInClosedState: 10
+      ringBufferSizeInHalfOpenState: 3
+      automaticTransitionFromOpenToHalfOpenEnabled: true
+      waitDurationInOpenState: 2s
+      failureRateThreshold: 50
+  instances:
+    getpersoncall:
+      baseConfig: default
+      registerHealthIndicator: true
+      ringBufferSizeInClosedState: 20
+      ringBufferSizeInHalfOpenState: 3
+      waitDurationInOpenState: 1s
+      failureRateThreshold: 50
+resilience4j.retry:
+  configs:
+    default:
+      maxRetryAttempts: 3
+      enableExponentialBackoff: true
+      exponentialBackoffMultiplier: 3
+      waitDuration: 10
+      retryExceptions:
+        - java.lang.IllegalStateException
+  instances:
+    getpersoncall:
+      baseConfig: default
+resilience4j.bulkhead:
+  configs:
+    default:
+      maxConcurrentCalls: 50
+      maxWaitDuration: 10ms
+  instances:
+    getpersoncall:
+      baseConfig: default
